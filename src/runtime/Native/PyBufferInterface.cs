@@ -14,11 +14,9 @@ namespace Python.Runtime
         [MarshalAs(UnmanagedType.SysInt)]
         public nint itemsize;  /* This is Py_ssize_t so it can be
                              pointed to by strides in simple case.*/
-        [MarshalAs(UnmanagedType.Bool)]
-        public bool _readonly;
+        public int _readonly;
         public int ndim;
-        [MarshalAs(UnmanagedType.LPStr)]
-        public string? format;
+        public IntPtr format;
         public IntPtr shape;
         public IntPtr strides;
         public IntPtr suboffsets;

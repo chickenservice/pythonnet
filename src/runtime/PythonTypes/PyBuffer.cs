@@ -44,9 +44,9 @@ namespace Python.Runtime
         public long Length => (long)_view.len;
         public long ItemSize => (long)_view.itemsize;
         public int Dimensions => _view.ndim;
-        public bool ReadOnly => _view._readonly;
+        public bool ReadOnly => _view._readonly > 0;
         public IntPtr Buffer => _view.buf;
-        public string? Format => _view.format;
+        public string? Format => Marshal.PtrToStringAnsi(_view.format);
 
         /// <summary>
         /// An array of length <see cref="Dimensions"/> indicating the shape of the memory as an n-dimensional array.

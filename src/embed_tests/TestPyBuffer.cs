@@ -62,6 +62,38 @@ namespace Python.EmbeddingTest {
         }
 
         [Test]
+        public void TestBufferRequestFull()
+        {
+            string bufferTestString = "hello world! !$%&/()=?";
+
+            using var _ = Py.GIL();
+
+            using var pythonArray = ByteArrayFromAsciiString(bufferTestString);
+            byte[] managedArray = new byte[bufferTestString.Length];
+
+            using (PyBuffer buf = pythonArray.GetBuffer(PyBUF.FULL))
+            {
+                Assert.AreEqual(buf.Format, "B");
+            }
+        }
+
+        [Test]
+        public void TestBufferRequestStridesBytearray()
+        {
+            string bufferTestString = "hello world! !$%&/()=?";
+
+            using var _ = Py.GIL();
+
+            using var pythonArray = ByteArrayFromAsciiString(bufferTestString);
+            byte[] managedArray = new byte[bufferTestString.Length];
+
+            using (PyBuffer buf = pythonArray.GetBuffer(PyBUF.CONTIG_RO))
+            {
+                Assert.AreEqual(22, buf.Shape[0]);
+            }
+        }
+
+        [Test]
         public void ArrayHasBuffer()
         {
             var array = new[,] {{1, 2}, {3,4}};
